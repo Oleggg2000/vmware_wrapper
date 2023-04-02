@@ -1,0 +1,5 @@
+.idea
+/venv
+/build
+/dist
+/vmware_wrapper.egg-info
