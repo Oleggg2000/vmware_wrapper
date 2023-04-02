@@ -1,3 +1,5 @@
 .idea
 /venv
-/vmware_wrapper/config.py
+/build
+/dist
+/vmware_wrapper.egg-info

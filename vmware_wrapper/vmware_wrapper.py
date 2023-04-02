@@ -21,6 +21,7 @@ from tools.helpers import get_network_backing
 _ROOT_DIR = Path(__file__).parent
 DEFAULT_CREDENTIALS = Path(_ROOT_DIR / 'tools/vmrest.cfg')
 
+
 class VMwareNodeVsphere:
     def __init__(self, node_ip: str = ''):
         session = requests.session()
@@ -44,7 +45,8 @@ class VMwareNodeVsphere:
             self.vm = [vm for vm in self.vms_in_folders(folder_names=autotests_folders) if
                        '.'.join(node_ip.split('.')[2:]) in vm.name][-1]
         except IndexError:
-            raise AssertionError(f"There's no vm with ip {self.node_ip} in folders {', '.join(autotests_folders)} at vSphere")
+            raise AssertionError(
+                f"There's no vm with ip {self.node_ip} in folders {', '.join(autotests_folders)} at vSphere")
         self.nic_summaries = self.client.vcenter.vm_settings.hardware.Ethernet.list(vm=self.vm.vm_settings)
 
     def manage_nic(self, connect: bool):
@@ -112,6 +114,7 @@ class VMwareNodeVsphere:
         vm_filter = VM.FilterSpec(folders=set(folder_id_list))
         return self.client.vcenter.VM.list(vm_filter)
 
+
 class VMwareLocalApi:
     PLATFORM = sys.platform
     if PLATFORM == 'linux':
@@ -138,7 +141,8 @@ class VMwareLocalApi:
     assert all([CONFIG_PATH, BINARY_PATH,
                 OVF_TOOL]), f"Can't find one of these files: {[CONFIG_PATH, BINARY_PATH, OVF_TOOL]}"
 
-    def __init__(self, new_cred_config_path=DEFAULT_CREDENTIALS, binary=None, config=None, ovf_tool=None, debug=False, port=None):
+    def __init__(self, new_cred_config_path=DEFAULT_CREDENTIALS, binary=None, config=None, ovf_tool=None, debug=False,
+                 port=None):
         self.session = requests.Session()
         self.session.auth = ('root', 'Root_12345')
         self.session.headers['Content-Type'] = 'application/vnd.vmware.vmw.rest-v1+json'
